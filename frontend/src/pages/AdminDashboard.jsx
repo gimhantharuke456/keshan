@@ -12,6 +12,8 @@ import {
 } from "@ant-design/icons";
 import ShiftSchedulePage from "./ShiftSchedulePage";
 import AllUsersPage from "./AllUsersPage";
+import AdminWorkingHours from "./AdminWorkingHours";
+import AdminOrderTracking from "./AdminOrderTracking";
 
 const { Sider, Content } = Layout;
 
@@ -99,8 +101,8 @@ const AdminDashboard = () => {
             {activeKey === "dashboard" && <div>Dashboard Content</div>}
             {activeKey === "users" && <AllUsersPage />}
             {activeKey === "shifts" && <ShiftSchedulePage />}
-            {activeKey === "orders" && <div>Order Tracking Content</div>}
-            {activeKey === "working-hours" && <div>Working Hours Content</div>}
+            {activeKey === "orders" && <AdminOrderTracking />}
+            {activeKey === "working-hours" && <AdminWorkingHours />}
             {activeKey === "payroll" && <div>Payroll Content</div>}
             {activeKey === "staff" && <div>Staff Management Content</div>}
           </div>

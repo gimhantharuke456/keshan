@@ -5,6 +5,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ShiftSchedulePage from "./pages/ShiftSchedulePage";
+import UserOrders from "./pages/UserOrders";
+import UserWorkingHours from "./pages/UserWorkingHours";
 
 const App = () => {
   return (
@@ -17,14 +19,14 @@ const App = () => {
         <Route element={<LoginPage />} path="/login" />
 
         {/* Working Hours Routes */}
-        <Route element={<div>Working Hours Page</div>} path="/working-hours" />
+        <Route element={<UserWorkingHours />} path="/working-hours" />
         <Route element={<div>Clock In Page</div>} path="/clock-in" />
         <Route element={<div>Clock Out Page</div>} path="/clock-out" />
         <Route element={<div>View Hours Page</div>} path="/view-hours" />
 
         {/* Order Management Routes */}
         <Route element={<div>Order Management Page</div>} path="/orders" />
-        <Route element={<div>My Orders Page</div>} path="/my-orders" />
+        <Route element={<UserOrders />} path="/my-orders" />
         <Route element={<div>Order Details Page</div>} path="/orders/:id" />
 
         {/* Shift Management Routes */}
