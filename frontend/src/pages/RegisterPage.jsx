@@ -18,7 +18,7 @@ const RegisterPage = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      await userApi.register(values);
+      await userApi.register({ ...values, role: "user", hourlyRate: 1 });
       message.success("Registration successful! Please login.");
       navigate("/login");
     } catch (error) {
@@ -99,20 +99,6 @@ const RegisterPage = () => {
             ]}
           >
             <Input.Password placeholder="••••••••" />
-          </Form.Item>
-
-          <Form.Item
-            name="hourlyRate"
-            label="Hourly Rate ($)"
-            rules={[
-              { required: true, message: "Please input your hourly rate!" },
-              {
-                pattern: /^\d+(\.\d{1,2})?$/,
-                message: "Please enter a valid amount (e.g. 15 or 15.50)",
-              },
-            ]}
-          >
-            <Input type="number" step="0.01" min="0" placeholder="15.00" />
           </Form.Item>
 
           <Form.Item>

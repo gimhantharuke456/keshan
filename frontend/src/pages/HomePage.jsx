@@ -26,24 +26,28 @@ const HomePage = () => {
 
   // Check if user has already clocked in/out today
   useEffect(() => {
-    const checkTodayRecord = async () => {
-      if (user?.id) {
-        try {
-          setLoading(true);
-          const today = new Date().toISOString().split("T")[0];
-          const response = await workingHoursApi.getUserRecordForDate(
-            user.id,
-            today
-          );
-          setTodayRecord(response);
-        } catch (error) {
-          console.error("Error fetching today's record:", error);
-        } finally {
-          setLoading(false);
+    if (!user) {
+      navigate("/login");
+    } else {
+      const checkTodayRecord = async () => {
+        if (user?.id) {
+          try {
+            setLoading(true);
+            const today = new Date().toISOString().split("T")[0];
+            const response = await workingHoursApi.getUserRecordForDate(
+              user.id,
+              today
+            );
+            setTodayRecord(response);
+          } catch (error) {
+            console.error("Error fetching today's record:", error);
+          } finally {
+            setLoading(false);
+          }
         }
-      }
-    };
-    checkTodayRecord();
+      };
+      checkTodayRecord();
+    }
   }, [user?.id]);
   const handleLogout = () => {
     localStorage.removeItem("token");

@@ -30,3 +30,55 @@
 .auth-link {
   font-weight: 500;
 }
+/* index.css */
+/* index.css */
+body {
+  font-family: Arial, sans-serif;
+  background-image: url("https://lh3.googleusercontent.com/FFd-4bk_zRVbr6A0KsQ7mTXKcIr1-mFRafZvujOeKNGAwjE0JyrJR4yE1sDePPfz1TC4Yna2fytzELe9mLaa=s1600");
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrollbars caused by the overlay */
+}
+
+.App {
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  max-width: 1200px; /* Limit the width of the content */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Glass effect overlay */
+.glass-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  backdrop-filter: blur(10px); /* Blur effect */
+  z-index: 1; /* Ensure it stays above the background but below content */
+}
+
+/* Content container */
+.content {
+  position: relative;
+  z-index: 2; /* Ensure content is above the glass effect */
+}
+
+.ant-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ant-btn {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}

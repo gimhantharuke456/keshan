@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import ShiftSchedulePage from "./pages/ShiftSchedulePage";
 import UserOrders from "./pages/UserOrders";
 import UserWorkingHours from "./pages/UserWorkingHours";
+import CustomerPage from "./pages/CustomerPage";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
         {/* Profile Routes */}
         <Route element={<div>Profile Page</div>} path="/profile" />
         <Route element={<div>Edit Profile Page</div>} path="/edit-profile" />
+        <Route element={<CustomerPage />} path="/customer" />
 
         {/* Fallback Route */}
         <Route element={<div>404 Not Found</div>} path="*" />

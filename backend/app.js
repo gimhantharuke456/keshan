@@ -27,7 +27,13 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/shifts", require("./routes/shiftRoutes"));
 app.use("/api/working-hours", require("./routes/workingHoursRoutes"));
 app.use("/api/order-assignments", require("./routes/orderAssigmentRoutes"));
-
+app.use("/api/bookings", require("./routes/bookingRoutes"));
+const inventoryRoutes = require("./routes/inventoryRoutes");
+app.use("/api/inventory", inventoryRoutes);
+const foodRoutes = require("./routes/foodRoutes");
+app.use("/api/food", foodRoutes);
+const orderRoutes = require("./routes/orderRoutes");
+app.use("/api/orders", orderRoutes);
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
