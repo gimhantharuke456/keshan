@@ -1,63 +1,73 @@
-import api from "./apiConfig";
+import axiosInstance from "./axiosConfig";
 
-export const userApi = {
-  // User registration
-  register: async (userData) => {
-    try {
-      const response = await api.post("/users", userData);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Create a new user
+export const createUser = async (userData) => {
+  try {
+    const response = await axiosInstance.post("/api/users", userData);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error creating user: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // User login
-  login: async (credentials) => {
-    try {
-      const response = await api.post("/users/login", credentials);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Login a user
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axiosInstance.post("/api/users/login", credentials);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error logging in: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Get all users
-  getAllUsers: async () => {
-    try {
-      const response = await api.get("/users");
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Get all users
+export const getUsers = async () => {
+  try {
+    const response = await axiosInstance.get("/api/users");
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error fetching users: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Get single user
-  getUser: async (userId) => {
-    try {
-      const response = await api.get(`/users/${userId}`);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Get a single user by ID
+export const getUser = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/api/users/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error fetching user: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Update user
-  updateUser: async (userId, userData) => {
-    try {
-      const response = await api.put(`/users/${userId}`, userData);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Update a user
+export const updateUser = async (id, updateData) => {
+  try {
+    const response = await axiosInstance.put(`/api/users/${id}`, updateData);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error updating user: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Delete user
-  deleteUser: async (userId) => {
-    try {
-      const response = await api.delete(`/users/${userId}`);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Delete a user
+export const deleteUser = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/api/users/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error deleting user: ${error.response?.data?.message || error.message}`
+    );
+  }
 };

@@ -1,53 +1,61 @@
-import api from "./apiConfig";
+import axiosInstance from "./axiosConfig";
 
-export const shiftApi = {
-  // Get all shifts
-  getAll: async () => {
-    try {
-      const response = await api.get("/shifts");
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Get all shifts
+export const getAllShifts = async () => {
+  try {
+    const response = await axiosInstance.get("/api/shifts");
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error fetching shifts: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Get single shift by ID
-  getById: async (id) => {
-    try {
-      const response = await api.get(`/shifts/${id}`);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Get a single shift by ID
+export const getShiftById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/api/shifts/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error fetching shift: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Create new shift
-  create: async (shiftData) => {
-    try {
-      const response = await api.post("/shifts", shiftData);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Create a new shift
+export const createShift = async (shiftData) => {
+  try {
+    const response = await axiosInstance.post("/api/shifts", shiftData);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error creating shift: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Update existing shift
-  update: async (id, updateData) => {
-    try {
-      const response = await api.put(`/shifts/${id}`, updateData);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Update a shift
+export const updateShift = async (id, updateData) => {
+  try {
+    const response = await axiosInstance.put(`/api/shifts/${id}`, updateData);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error updating shift: ${error.response?.data?.message || error.message}`
+    );
+  }
+};
 
-  // Delete shift
-  delete: async (id) => {
-    try {
-      const response = await api.delete(`/shifts/${id}`);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error;
-    }
-  },
+// Delete a shift
+export const deleteShift = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/api/shifts/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Error deleting shift: ${error.response?.data?.message || error.message}`
+    );
+  }
 };
