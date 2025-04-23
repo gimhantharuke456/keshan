@@ -1,7 +1,7 @@
 const Shift = require("../models/Shift");
 
 const getAllShifts = async () => {
-  return await Shift.find().populate("user", "name email");
+  return await Shift.find().populate("user", "_id name email");
 };
 
 const getShiftById = async (id) => {
