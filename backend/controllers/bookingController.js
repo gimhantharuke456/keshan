@@ -6,6 +6,7 @@ exports.createBookingHandler = async (req, res) => {
     const booking = await bookingService.createBooking(req.body);
     res.status(201).json({ success: true, data: booking });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

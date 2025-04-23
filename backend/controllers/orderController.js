@@ -3,8 +3,7 @@ const orderService = require("../services/orderService");
 // Create a new order
 exports.createOrderHandler = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user is authenticated and attached to req.user
-    const order = await orderService.createOrder(userId, req.body);
+    const order = await orderService.createOrder(req.body.user, req.body);
     res.status(201).json({ success: true, data: order });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

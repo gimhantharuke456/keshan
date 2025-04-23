@@ -6,7 +6,17 @@ const createOrderAssignment = async (orderAssignmentData) => {
 };
 
 const getAllOrderAssignments = async () => {
-  return await OrderAssignment.find().populate("user", "name email");
+  return await OrderAssignment.find()
+    .populate("user", "name email")
+    .populate({
+      path: "orderId",
+      select: "items totalPrice status createdAt",
+      populate: {
+        path: "items.foodItem",
+        model: "FoodItem",
+        select: "name price category",
+      },
+    });
 };
 
 const getOrderAssignmentById = async (id) => {

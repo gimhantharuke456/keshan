@@ -16,7 +16,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import { autoTable } from "jspdf-autotable";
 import {
   addOrUpdateInventoryItem,
   getAllInventoryItems,
@@ -138,7 +138,7 @@ const InventoryManagement = () => {
       );
       yPos += 10;
 
-      doc.autoTable({
+      autoTable(doc, {
         head: [["ID", "Name", "Supplier", "Quantity", "Price", "Expire Date"]],
         body: groupedItems[category].map((item) => [
           item.inventoryId,

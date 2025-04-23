@@ -7,7 +7,8 @@ const orderAssignmentSchema = new mongoose.Schema({
     required: true,
   },
   orderId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Order",
     required: true,
   },
   dateAssigned: {

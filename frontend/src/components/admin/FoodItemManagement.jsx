@@ -16,7 +16,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import { autoTable } from "jspdf-autotable";
 import {
   createFoodItem,
   getAllFoodItems,
@@ -122,13 +122,12 @@ const FoodItemManagement = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text("Food Items List", 14, 10);
-    doc.autoTable({
-      head: [["Name", "Description", "Price", "Image URL"]],
+    autoTable(doc, {
+      head: [["Name", "Description", "Price"]],
       body: foodItems.map((item) => [
         item.name,
         item.description,
         `$${item.price}`,
-        item.imageUrl,
       ]),
     });
     doc.save("food-items.pdf");
