@@ -25,7 +25,8 @@ const OrderManagement = () => {
       try {
         setLoading(true); // Start loading state
         const response = await getAllOrders();
-        setOrders(response.data); // Set orders data
+        // Add null safety check for response
+        setOrders(response?.data || []); // Set orders data with default empty array
       } catch (error) {
         console.error("Error fetching orders:", error);
         messageApi.error("Failed to load orders. Please try again.");
@@ -51,14 +52,19 @@ const OrderManagement = () => {
 
   // Handle updating the status of an order
   const handleUpdateStatus = async (orderId, newStatus) => {
+    if (!orderId) {
+      messageApi.error("Invalid order ID");
+      return;
+    }
+
     try {
       setLoading(true); // Start loading state
       await updateOrder(orderId, { status: newStatus }); // Update status via API
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order._id === orderId ? { ...order, status: newStatus } : order
+          order?._id === orderId ? { ...order, status: newStatus } : order
         )
-      ); // Update local state
+      ); // Update local state with null check
       messageApi.success(`Order status updated to ${newStatus}`);
     } catch (error) {
       console.error("Error updating order status:", error);
@@ -70,12 +76,17 @@ const OrderManagement = () => {
 
   // Handle deleting an order
   const handleDeleteOrder = async (orderId) => {
+    if (!orderId) {
+      messageApi.error("Invalid order ID");
+      return;
+    }
+
     try {
       setLoading(true); // Start loading state
       await deleteOrder(orderId); // Delete order via API
       setOrders((prevOrders) =>
-        prevOrders.filter((order) => order._id !== orderId)
-      ); // Remove deleted order from state
+        prevOrders.filter((order) => order?._id !== orderId)
+      ); // Remove deleted order from state with null check
       messageApi.success("Order deleted successfully.");
     } catch (error) {
       console.error("Error deleting order:", error);
@@ -91,19 +102,19 @@ const OrderManagement = () => {
       title: "Order ID",
       dataIndex: "_id",
       key: "_id",
-      render: (id) => <span>{id.slice(0, 8)}...</span>, // Show truncated ID
+      render: (id) => <span>{id ? id.slice(0, 8) + "..." : "N/A"}</span>, // Show truncated ID with null check
     },
     {
       title: "User",
       dataIndex: "user",
       key: "user",
-      render: (user) => user.name || "Unknown User",
+      render: (user) => user?.name || "Unknown User", // Added null check with optional chaining
     },
     {
       title: "Total Price",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (price) => `LKR ${price.toLocaleString()}`,
+      render: (price) => `LKR ${price ? price.toLocaleString() : "0"}`, // Added null check
     },
     {
       title: "Status",
@@ -111,9 +122,11 @@ const OrderManagement = () => {
       key: "status",
       render: (status, record) => (
         <Select
-          defaultValue={status}
+          defaultValue={status || "pending"}
           style={{ width: 120 }}
-          onChange={(value) => handleUpdateStatus(record._id, value)}
+          onChange={(value) =>
+            record?._id && handleUpdateStatus(record._id, value)
+          } // Added null check
         >
           <Select.Option value="pending">Pending</Select.Option>
           <Select.Option value="processing">Processing</Select.Option>
@@ -136,7 +149,7 @@ const OrderManagement = () => {
           {/* Delete Button */}
           <Popconfirm
             title="Are you sure you want to delete this order?"
-            onConfirm={() => handleDeleteOrder(record._id)}
+            onConfirm={() => record?._id && handleDeleteOrder(record._id)} // Added null check
             okText="Yes"
             cancelText="No"
           >
@@ -165,7 +178,7 @@ const OrderManagement = () => {
         <Table
           dataSource={orders}
           columns={columns}
-          rowKey="_id"
+          rowKey={(record) => record?._id || Math.random().toString()} // Added null safety for rowKey
           pagination={{ pageSize: 5 }}
         />
       )}
@@ -173,14 +186,14 @@ const OrderManagement = () => {
       {/* Modal for Viewing Order Details */}
       <Modal
         title="Order Details"
-        visible={isModalVisible}
+        open={isModalVisible} // Updated 'visible' prop to 'open' for newer Ant Design versions
         onCancel={closeModal}
         footer={null}
       >
         {selectedOrder && (
           <Descriptions bordered column={1}>
             <Descriptions.Item label="Order ID">
-              {selectedOrder._id}
+              {selectedOrder._id || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="User">
               {selectedOrder.user?.name || "Unknown User"}
@@ -189,19 +202,29 @@ const OrderManagement = () => {
               {selectedOrder.user?.email || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Total Price">
-              LKR {selectedOrder.totalPrice.toLocaleString()}
+              LKR{" "}
+              {selectedOrder.totalPrice
+                ? selectedOrder.totalPrice.toLocaleString()
+                : "0"}
             </Descriptions.Item>
             <Descriptions.Item label="Status">
-              {selectedOrder.status.toUpperCase()}
+              {selectedOrder.status
+                ? selectedOrder.status.toUpperCase()
+                : "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Items">
-              <ul>
-                {selectedOrder.items.map((item) => (
-                  <li key={item._id}>
-                    {item.foodItem.name} x {item.quantity}
-                  </li>
-                ))}
-              </ul>
+              {selectedOrder.items && selectedOrder.items.length > 0 ? (
+                <ul>
+                  {selectedOrder.items.map((item) => (
+                    <li key={item?._id || Math.random().toString()}>
+                      {item?.foodItem?.name || "Unknown Item"} x{" "}
+                      {item?.quantity || 0}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                "No items found"
+              )}
             </Descriptions.Item>
           </Descriptions>
         )}
