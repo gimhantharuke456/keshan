@@ -10,6 +10,7 @@ import BookingCreatePage from "./pages/BookingCreatePage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import CartPage from "./pages/CartPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+import APPDUMMY from "./keshan/APPDUMMY";
 const App = () => {
   return (
     <BrowserRouter>
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/my-bookings" element={<MyBookingsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/my-orders" element={<MyOrdersPage />} />
+        <Route path="/keshan/*" element={<APPDUMMY />} />
       </Routes>
     </BrowserRouter>
   );

@@ -131,7 +131,7 @@ const OrderAssignmentManagement = () => {
     doc.text("Order Assignment Report", 10, 10);
     const tableData = filteredAssignments.map((assignment) => [
       assignment.user.name,
-      assignment.orderId.items[0].foodItem.name,
+      assignment.orderId.items[0]?.foodItem.name,
       assignment.status.toUpperCase(),
       new Date(assignment.dateAssigned).toLocaleDateString(),
     ]);
@@ -171,7 +171,7 @@ const OrderAssignmentManagement = () => {
       title: "Order Item",
       dataIndex: ["orderId", "items"],
       key: "orderItem",
-      render: (items) => items[0].foodItem.name,
+      render: (items) => items[0]?.foodItem.name,
     },
     {
       title: "Status",
@@ -327,7 +327,7 @@ const OrderAssignmentManagement = () => {
             <Select placeholder="Select an order">
               {orders.map((order) => (
                 <Select.Option key={order._id} value={order._id}>
-                  {order.items[0].foodItem.name} (LKR{" "}
+                  {order.items[0]?.foodItem.name} (LKR{" "}
                   {order.totalPrice.toLocaleString()})
                 </Select.Option>
               ))}
@@ -368,10 +368,10 @@ const OrderAssignmentManagement = () => {
               {selectedAssignment.user.name} ({selectedAssignment.user.email})
             </Descriptions.Item>
             <Descriptions.Item label="Order Item">
-              {selectedAssignment.orderId.items[0].foodItem.name}
+              {selectedAssignment.orderId.items[0]?.foodItem.name}
             </Descriptions.Item>
             <Descriptions.Item label="Quantity">
-              {selectedAssignment.orderId.items[0].quantity}
+              {selectedAssignment.orderId.items[0]?.quantity}
             </Descriptions.Item>
             <Descriptions.Item label="Total Price">
               LKR {selectedAssignment.orderId.totalPrice.toLocaleString()}
